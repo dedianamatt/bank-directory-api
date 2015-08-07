@@ -1,0 +1,31 @@
+{
+  "name": "bank-directory-api",
+  "version": "1.0.0",
+  "description": "HTTP API to Federal Reserve Bank Service's EPayments Directory",
+  "main": "server.js",
+  "scripts": {
+    "test": "curl http://example.com/banks/091071585"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dedianamatt/bank-directory-api.git"
+  },
+  "keywords": [
+    "HTTP",
+    "API",
+    "HTTP",
+    "Bank",
+	"Name",
+    "Routing",
+	"Number"
+  ],
+  "author": "Matt DeDiana",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dedianamatt/bank-ids-to-names/issues"
+  },
+  "homepage": "https://github.com/dedianamatt/bank-ids-to-names#readme",
+  "dependencies": {
+    "express": "^4.13.3"
+  }
+}
