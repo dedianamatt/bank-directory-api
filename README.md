@@ -3,15 +3,19 @@ HTTP API to Federal Reserve Bank Service's EPayments Directory written in Node.j
 This file should be copied/replaced in this repository 
 
 - Download source and run npm install to install dependencies
-- Runs on port 1338
+- Runs on port 1338 or, in heroku, whatever port is assigned
 
-Examples:
+App is deployed to heroku. Example HTTP GET:
 
-Get the name of a bank based on the routing id
-curl http://localhost:1338/banks/043305092
+curl https://bank-directory-api.herokuapp.com/banks/211672683
+
+Example JSON Response:
+{"routingId":"211672683","bankName":"NORTHFIELD SAVINGS BANK"}
 
 TODO:
-- Add endpoint for all banks.
+- Add route for all banks.
+- Add HTTP error responses
 - Parse out additional data from text Directory
-- Add endpoint for queries.
+- Add route for searches.
+- Add index.html 
 - Read fpddir.txt file from web instead of downloading it. 
