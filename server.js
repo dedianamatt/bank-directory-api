@@ -23,8 +23,8 @@ app.get('/banks/:routingId', function(req, res) {
 	res.send();
 });
 
-app.listen(1338, function() {
-	console.log('listenting on port 1338');
+app.listen(process.env.PORT || 1338, function() {
+	console.log("listening on port "+ process.env.PORT + " or port 1338");
 	server.loadMap();
 });
 
