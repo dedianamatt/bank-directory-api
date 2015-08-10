@@ -3,7 +3,7 @@ HTTP API to Federal Reserve Bank Service's EPayments Directory written in Node.j
 This file should be copied/replaced in this repository 
 
 - Download source and run npm install to install dependencies
-- Runs on port 1338 or, in heroku, whatever port is assigned
+- Runs on port 5000 or, in heroku, whatever port is assigned
 
 App is deployed to heroku. Example HTTP GET:
 
