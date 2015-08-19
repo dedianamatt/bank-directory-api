@@ -3,6 +3,7 @@ var fs = require('fs');
 var url = require('url');
 var path = require('path');
 var express = require('express');
+var _string = require('underscore.string');
 var server = server || {};
 
 /*****************/
@@ -11,9 +12,33 @@ var app = express();
 app.set('port', (process.env.PORT || 5000))
 
 app.get('/api/banks', function(req, res) {
-	console.log("all banks");
-	res.send();
+	var returnBanks = [];
+	if (req.query !== {}) {
+		returnBanks = returnBanks.concat(
+			server.searchBanksByProperty("routingNumber", req.query.routingNumber),
+			server.searchBanksByProperty("telegraphicName", req.query.telegraphicName),
+			server.searchBanksByProperty("customerName", req.query.customerName), 
+			server.searchBanksByProperty("state", req.query.state),
+			server.searchBanksByProperty("city", req.query.city));
+		res.json(returnBanks);
+	} else {
+		res.status(501).send("Sorry, api not implemented yet.");
+	}		
 });
+
+server.searchBanksByProperty = function(propName, searchValue) {
+	if (searchValue == undefined)
+		return [];
+	
+	return result = Object.keys(server.bankDirectory)
+		.filter(function(key) {
+			var directoryItem = server.bankDirectory[key];			
+			return _string.startsWith(directoryItem[propName].toUpperCase(), searchValue.toUpperCase());			
+		})
+		.map(function(key) {
+			return server.bankDirectory[key];
+		});
+}
 
 app.get('/api/banks/:routingId', function(req, res) {
 	var inputId = req.params.routingId;
@@ -24,6 +49,7 @@ app.get('/api/banks/:routingId', function(req, res) {
 		res.status(404).send("Sorry, we can't find a bank with that routing number");
 	}
 });
+
 
 app.listen(app.get('port'), function() {
 	console.log("listening on port ", app.get('port'));
@@ -41,7 +67,7 @@ value: directoryEntry {
 	fundsTransferStatus: "bool: true - Eligible, false - Ineligible",
 	fundsSettlementOnlyStatus: "bool: true - Settlement-only; false - not settlement-only",
 	bookEntrySecuritiesTransferStatus: "bool: true - eligible; false - ineligible",
-	lastRevisedDate: "date of last revision"
+	lastRevisedDate: "date of last revision, may be null"
 } */
 server.bankDirectory = {};
 server.loadMap = function() {
@@ -62,7 +88,9 @@ server.loadMap = function() {
 					fundsTransferStatus: bankLine.substring(90, 91).trim() === "Y",
 					fundsSettlementOnlyStatus: bankLine.substring(91,92).trim() === "S",
 					bookEntrySecuritiesTransferStatus: bankLine.substring(92, 93).trim() === "Y",
-					lastRevisedDate: bankLine.substring(93, 101).trim()
+					lastRevisedDate: (bankLine.substring(93,101).trim()) ? 
+						new Date(bankLine.substring(93, 97).trim(), bankLine.substring(97, 99).trim(), bankLine.substring(99, 101).trim()) :
+						null
 				};
 		});
 		console.log("map loaded");		

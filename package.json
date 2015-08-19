@@ -15,9 +15,9 @@
     "API",
     "HTTP",
     "Bank",
-	"Name",
+    "Name",
     "Routing",
-	"Number"
+    "Number"
   ],
   "author": "Matt DeDiana",
   "license": "ISC",
@@ -26,6 +26,7 @@
   },
   "homepage": "https://github.com/dedianamatt/bank-ids-to-names#readme",
   "dependencies": {
-    "express": "^4.13.3"
+    "express": "^4.13.3",
+    "underscore.string": "^3.1.1"
   }
 }
