@@ -26,20 +26,6 @@ app.get('/api/banks', function(req, res) {
 	}		
 });
 
-server.searchBanksByProperty = function(propName, searchValue) {
-	if (searchValue == undefined)
-		return [];
-	
-	return result = Object.keys(server.bankDirectory)
-		.filter(function(key) {
-			var directoryItem = server.bankDirectory[key];			
-			return _string.startsWith(directoryItem[propName].toUpperCase(), searchValue.toUpperCase());			
-		})
-		.map(function(key) {
-			return server.bankDirectory[key];
-		});
-}
-
 app.get('/api/banks/:routingId', function(req, res) {
 	var inputId = req.params.routingId;
 	if (typeof(server.bankDirectory[inputId]) !== 'undefined') {		
@@ -95,5 +81,19 @@ server.loadMap = function() {
 		});
 		console.log("map loaded");		
 	});
+}
+
+server.searchBanksByProperty = function(propName, searchValue) {
+	if (searchValue == undefined)
+		return [];
+	
+	return result = Object.keys(server.bankDirectory)
+		.filter(function(key) {
+			var directoryItem = server.bankDirectory[key];			
+			return _string.startsWith(directoryItem[propName].toUpperCase(), searchValue.toUpperCase());			
+		})
+		.map(function(key) {
+			return server.bankDirectory[key];
+		});
 }
 
