@@ -9,7 +9,8 @@ var server = server || {};
 /*****************/
 var app = express();
 
-app.set('port', (process.env.PORT || 5000))
+app.set('port', (process.env.PORT || 5000));
+
 
 app.get('/api/banks', function(req, res) {
 	var returnBanks = [];
@@ -20,6 +21,7 @@ app.get('/api/banks', function(req, res) {
 			server.searchBanksByProperty("customerName", req.query.customerName), 
 			server.searchBanksByProperty("state", req.query.state),
 			server.searchBanksByProperty("city", req.query.city));
+		res.setHeader('Access-Control-Allow-Origin', '*');
 		res.json(returnBanks);
 	} else {
 		res.status(501).send("Sorry, api not implemented yet.");
@@ -28,8 +30,9 @@ app.get('/api/banks', function(req, res) {
 
 app.get('/api/banks/:routingId', function(req, res) {
 	var inputId = req.params.routingId;
-	if (typeof(server.bankDirectory[inputId]) !== 'undefined') {		
-		res.json(server.bankDirectory[inputId]);
+	if (typeof(server.bankDirectory[inputId]) !== 'undefined') {	
+		res.setHeader('Access-Control-Allow-Origin', '*');	
+		res.json(server.bankDirectory[inputId]);		
 	}
 	else {
 		res.status(404).send("Sorry, we can't find a bank with that routing number");
